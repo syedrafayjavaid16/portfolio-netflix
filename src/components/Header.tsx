@@ -24,7 +24,21 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
+      
+      // Update active link based on scroll position
+      const sections = ['home', 'about', 'skills', 'projects', 'contact'];
+      const scrollPosition = window.scrollY + 100; // Offset for header height
+      
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section && section.offsetTop <= scrollPosition) {
+          const sectionNames = ['Home', 'About', 'Skills', 'Projects', 'Contact'];
+          setActiveLink(sectionNames[i]);
+          break;
+        }
+      }
     };
+    
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -38,9 +52,9 @@ const Header = () => {
   ];
 
   const socialLinks = [
-    { icon: Github, href: "#", label: "GitHub" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Mail, href: "#", label: "Email" },
+    { icon: Github, href: "https://github.com/syedrafayjavaid16", label: "GitHub" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/syed-rafay-javaid-36468222b/", label: "LinkedIn" },
+    { icon: Mail, href: "mailto:syedrafayjavaid16@gmail.com", label: "Email" },
   ];
 
   return (
@@ -49,22 +63,21 @@ const Header = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "backdrop-blur-md py-3" : "backdrop-blur-sm py-3"
+        scrolled ? "backdrop-blur-md py-3 bg-black/20" : "backdrop-blur-sm py-3 bg-transparent"
       }`}
-      style={{ borderBottom: "1px solid rgba(229,9,20,0.15)" }}
     >
       <nav className="container mx-auto px-6 flex items-center justify-between relative z-10">
-        {/* Profile Picture on Left */}
-        <div className="flex items-center shrink-0">
-          <Image
-            src="/profile.jpg" // Replace with your profile image path
-            alt="Profile"
-            height={10}
-            width={10}
-            className="w-10 h-10 rounded-full border-2 border-netflix-red shadow-lg"
-            draggable={false}
-          />
-        </div>
+                           {/* Profile Picture on Left */}
+          <div className="flex items-center shrink-0">
+            <Image
+              src="/profile.png"
+              alt="Syed Rafay Javaid"
+              height={40}
+              width={40}
+              className="w-10 h-10 rounded-full border-2 border-netflix-red shadow-lg object-cover"
+              draggable={false}
+            />
+          </div>
 
         {/* Centered Nav Links */}
         <div className="absolute left-1/2 -translate-x-1/2 flex">
@@ -77,18 +90,18 @@ const Header = () => {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`relative font-semibold flex items-center space-x-2 group cursor-pointer transition-all duration-300 ${
-                  activeLink === item.name
-                    ? "text-netflix-red drop-shadow-[0_0_12px_rgba(229,9,20,0.9)]"
-                    : "text-white hover:text-netflix-red"
-                }`}
+                                 className={`relative font-semibold flex items-center space-x-2 group cursor-pointer transition-all duration-300 ${
+                   activeLink === item.name
+                     ? "text-netflix-red drop-shadow-[0_0_12px_rgba(229,9,20,0.9)]"
+                     : "text-white hover:text-netflix-red"
+                 }`}
               >
-                <item.icon
-                  size={18}
-                  className={`transition-colors duration-300 ${
-                    activeLink === item.name ? "text-netflix-red" : "text-white"
-                  }`}
-                />
+                                 <item.icon
+                   size={18}
+                   className={`transition-colors duration-300 ${
+                     activeLink === item.name ? "text-netflix-red" : "text-white group-hover:text-netflix-red"
+                   }`}
+                 />
                 <span>{item.name}</span>
                 {/* Hover underline */}
                 <span className="absolute left-0 bottom-[-5px] w-0 h-[2.5px] bg-netflix-red transition-all duration-300 group-hover:w-full"></span>
@@ -106,11 +119,11 @@ const Header = () => {
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-              whileHover={{
-                scale: 1.25,
-                rotate: 360,
-                boxShadow: "0px 0px 15px rgba(229, 9, 20, 0.7)",
-              }}
+                             whileHover={{
+                 scale: 1.25,
+                 rotate: 360,
+                 boxShadow: "0px 0px 15px rgba(229, 9, 20, 0.7)",
+               }}
               className="text-white hover:text-netflix-red transition-colors duration-300 p-2 rounded-full hover:bg-netflix-red/10"
               target="_blank"
               rel="noopener noreferrer"
@@ -142,7 +155,7 @@ const Header = () => {
         transition={{ duration: 0.3 }}
         className="md:hidden overflow-hidden"
       >
-        <div className="py-5 space-y-5 bg-black/90 backdrop-blur-md border-t border-netflix-red/30">
+        <div className="py-5 space-y-5 bg-black/40 backdrop-blur-md">
           {navItems.map((item, index) => (
             <motion.a
               key={item.name}
@@ -164,16 +177,16 @@ const Header = () => {
                   : "text-white hover:text-netflix-red"
               }`}
             >
-              <item.icon
-                size={20}
-                className={`transition-colors duration-300 ${
-                  activeLink === item.name ? "text-netflix-red" : "text-white"
-                }`}
-              />
+                             <item.icon
+                 size={20}
+                 className={`transition-colors duration-300 ${
+                   activeLink === item.name ? "text-netflix-red" : "text-white group-hover:text-netflix-red"
+                 }`}
+               />
               <span>{item.name}</span>
             </motion.a>
           ))}
-          <div className="flex space-x-6 px-6 pt-6 border-t border-netflix-red/30 justify-center">
+          <div className="flex space-x-6 px-6 pt-6 border-t border-white/20 justify-center">
             {socialLinks.map((social, index) => (
               <motion.a
                 key={social.label}

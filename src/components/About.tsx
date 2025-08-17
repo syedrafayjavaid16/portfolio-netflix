@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Code2, Lightbulb, Rocket, Users } from 'lucide-react';
 import { FiDownload } from 'react-icons/fi';
+import Image from 'next/image';
 
 const About = () => {
   const stats = [
@@ -24,13 +25,37 @@ const About = () => {
   };
 
   const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
+    hidden: { y: 100, opacity: 0, scale: 0.8 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1,
+        ease: "easeOut" as const, 
+      },
+    },
+  };
+
+  const staggerContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const floatingVariants = {
+    hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
         duration: 0.8,
-        ease: "easeOut" as const, 
+        ease: "easeOut" as const,
       },
     },
   };
@@ -62,25 +87,38 @@ const About = () => {
             <div className="w-24 h-1 bg-netflix-red mx-auto rounded-full" />
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <motion.div 
+            variants={staggerContainerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            className="grid md:grid-cols-2 gap-12 items-center"
+          >
             {/* Left Column - Image/Visual */}
             <motion.div variants={itemVariants} className="relative">
               <div className="relative">
-                {/* Profile Image Placeholder */}
-                <motion.div
-                  whileHover={{
-                    scale: 1.05,
-                    rotate: [0, 5, -5, 0],
-                    boxShadow: '0 0 40px rgba(51, 51, 51, 0.3)',
-                  }}
-                  transition={{ duration: 0.3 }}
-                  className="w-64 h-64 mx-auto bg-gradient-to-br from-netflix-gray/80 to-black/80 rounded-full border-4 border-netflix-gray flex items-center justify-center backdrop-blur-sm"
-                >
-                  <Code2 size={80} className="text-white opacity-50" />
-                </motion.div>
+                                 {/* Profile Image */}
+                 <motion.div
+                   whileHover={{
+                     scale: 1.05,
+                     rotate: [0, 5, -5, 0],
+                     boxShadow: '0 0 40px rgba(51, 51, 51, 0.3)',
+                   }}
+                   transition={{ duration: 0.3 }}
+                   className="w-64 h-64 mx-auto bg-gradient-to-br from-netflix-gray/80 to-black/80 rounded-full border-4 border-netflix-gray flex items-center justify-center backdrop-blur-sm overflow-hidden"
+                 >
+                   <Image 
+                     src="/profile.png" 
+                     alt="Syed Rafay Javaid" 
+                     width={256}
+                     height={256}
+                     className="w-full h-full object-cover rounded-full"
+                   />
+                 </motion.div>
 
                 {/* Floating Elements */}
                 <motion.div
+                  variants={floatingVariants}
                   animate={{
                     y: [-10, 10, -10],
                     rotate: [0, 5, 0],
@@ -96,6 +134,7 @@ const About = () => {
                 </motion.div>
 
                 <motion.div
+                  variants={floatingVariants}
                   animate={{
                     y: [10, -10, 10],
                     rotate: [0, -5, 0],
@@ -140,19 +179,22 @@ const About = () => {
 
               {/* Download CV Button */}
               <motion.a
-                href="#"
+                href="/RESUME - RAFAY JAVAID.pdf"
                 whileHover={{
                   scale: 1.1,
                   boxShadow: '0 0 30px rgba(229, 9, 20, 0.5)',
                 }}
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center gap-x-1 px-6 py-3 bg-netflix-red border border-netflix-red text-white font-semibold rounded-full hover:bg-netflix-red-dark hover:border-netflix-red/50 transition-all duration-300 shadow-lg backdrop-blur-sm"
+                target="_blank"
+                rel="noopener noreferrer"
+                download="RESUME - RAFAY JAVAID.pdf"
               >
                 <FiDownload className="text-lg" />
-                Download Resume
+                Download CV
               </motion.a>
             </motion.div>
-          </div>
+          </motion.div>
 
           {/* Stats Section */}
           <motion.div

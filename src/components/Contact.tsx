@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-react';
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -21,47 +22,67 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    
-    // You would typically handle the actual form submission here
-    alert('Message sent successfully!');
-  };
+     const handleSubmit = async (e: React.FormEvent) => {
+     e.preventDefault();
+     setIsSubmitting(true);
+     
+     try {
+       const templateParams = {
+         from_name: formData.name,
+         from_email: formData.email,
+         subject: formData.subject,
+         message: formData.message,
+         to_email: 'syedrafayjavaid2025@gmail.com',
+       };
 
-  const contactInfo = [
-    {
-      icon: Mail,
-      label: 'Email',
-      value: 'your.email@example.com',
-      href: 'mailto:your.email@example.com',
-      color: 'netflix-red',
-    },
-    {
-      icon: Phone,
-      label: 'Phone',
-      value: '+1 (555) 123-4567',
-      href: 'tel:+15551234567',
-      color: 'netflix-red-dark',
-    },
-    {
-      icon: MapPin,
-      label: 'Location',
-      value: 'Your City, Country',
-      href: '#',
-      color: 'netflix-red-light',
-    },
-  ];
+       const result = await emailjs.send(
+         'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
+         'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+         templateParams,
+         'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
+       );
+
+       if (result.status === 200) {
+         setFormData({ name: '', email: '', subject: '', message: '' });
+         alert('Message sent successfully! I will get back to you soon.');
+       } else {
+         throw new Error('Failed to send message');
+       }
+     } catch (error) {
+       console.error('Error sending message:', error);
+       alert('Failed to send message. Please try again or contact me directly at syedrafayjavaid2025@gmail.com');
+     } finally {
+       setIsSubmitting(false);
+     }
+   };
+
+     const contactInfo = [
+     {
+       icon: Mail,
+       label: 'Email',
+       value: 'syedrafayjavaid2025@gmail.com',
+       href: 'mailto:syedrafayjavaid2025@gmail.com',
+       color: 'netflix-red',
+     },
+     {
+       icon: Phone,
+       label: 'Phone',
+       value: '+92 332 1656505',
+       href: 'tel:+923321656505',
+       color: 'netflix-red-dark',
+     },
+     {
+       icon: MapPin,
+       label: 'Location',
+       value: 'Islamabad, Pakistan',
+       href: '#',
+       color: 'netflix-red-light',
+     },
+   ];
 
   const socialLinks = [
-    { icon: Github, href: '#', label: 'GitHub', color: 'netflix-red' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn', color: 'netflix-red-dark' },
+    { icon: Github, href: 'https://github.com/syedrafayjavaid16', label: 'GitHub', color: 'netflix-red' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/syed-rafay-javaid-36468222b/', label: 'LinkedIn', color: 'netflix-red-dark' },
     { icon: Twitter, href: '#', label: 'Twitter', color: 'netflix-red-light' },
   ];
 
@@ -89,7 +110,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-black relative overflow-hidden">
+         <section id="contact" className="py-20 bg-gradient-to-b from-black via-netflix-black to-black relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-netflix-red/10 rounded-full blur-3xl" />
@@ -141,7 +162,7 @@ const Contact = () => {
                       scale: 1.05,
                       boxShadow: '0 0 20px rgba(229, 9, 20, 0.4)',
                     }}
-                    className="flex items-center space-x-3 p-3 rounded-xl bg-gradient-to-br from-netflix-gray/80 to-black/80 border border-netflix-gray hover:border-netflix-red/50 backdrop-blur-sm transition-all duration-300"
+                    className="flex items-center space-x-3 p-3 rounded-xl bg-gradient-to-r from-gray-900/50 to-gray-800/50 border border-white/10 backdrop-blur-sm transition-all duration-300"
                   >
                     <div className="p-2 rounded-full bg-netflix-gray/80">
                       <info.icon 
@@ -174,14 +195,14 @@ const Contact = () => {
                         rotate: 360,
                         boxShadow: '0 0 20px rgba(229, 9, 20, 0.5)',
                       }}
-                      className="p-3 rounded-full bg-netflix-gray/80 hover:bg-netflix-red border border-netflix-gray hover:border-netflix-red transition-all duration-300"
+                                             className="p-3 rounded-full bg-gradient-to-r from-gray-900/50 to-gray-800/50 border border-white/10 hover:bg-netflix-red transition-all duration-300 group"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <social.icon 
-                        size={20} 
-                        className="text-netflix-red" 
-                      />
+                                             <social.icon 
+                         size={20} 
+                         className="text-netflix-red group-hover:text-white transition-colors duration-300" 
+                       />
                     </motion.a>
                   ))}
                 </div>
@@ -190,7 +211,7 @@ const Contact = () => {
 
             {/* Contact Form */}
             <motion.div variants={itemVariants}>
-              <div className="bg-gradient-to-br from-netflix-gray/80 to-black/80 p-6 rounded-2xl backdrop-blur-sm border border-netflix-gray">
+              <div className="bg-gradient-to-r from-gray-900/50 to-gray-800/50 p-6 rounded-2xl backdrop-blur-sm border border-white/10 transition-all duration-300">
                 <h3 className="text-xl font-bold text-white mb-4">Send a Message</h3>
                 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -296,18 +317,18 @@ const Contact = () => {
                       whileTap={{ scale: 0.95 }}
                       className="w-full py-4 bg-netflix-red hover:bg-netflix-red-dark text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {isSubmitting ? (
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                          className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
-                        />
-                      ) : (
-                        <>
-                          <Send size={20} />
-                          <span>Send Message</span>
-                        </>
-                      )}
+                                             {isSubmitting ? (
+                         <motion.div
+                           animate={{ rotate: 360 }}
+                           transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                           className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                         />
+                       ) : (
+                         <>
+                           <Send size={20} className="text-white" />
+                           <span>Send Message</span>
+                         </>
+                       )}
                     </motion.button>
                   </motion.div>
                 </form>

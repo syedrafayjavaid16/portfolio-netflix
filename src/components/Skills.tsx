@@ -80,8 +80,13 @@ const Skills = () => {
   };
 
   const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-          visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" as const } },
+    hidden: { y: 100, opacity: 0, scale: 0.8 },
+    visible: { 
+      y: 0, 
+      opacity: 1, 
+      scale: 1,
+      transition: { duration: 1, ease: "easeOut" as const } 
+    },
   };
 
   const skillBarVariants = {
@@ -93,7 +98,7 @@ const Skills = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-black via-netflix-black to-black relative overflow-hidden">
+    <section id="skills" className="py-20 bg-gradient-to-b from-black via-netflix-black to-black relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/5 w-72 h-72 bg-netflix-red/10 rounded-full blur-3xl" />
@@ -154,10 +159,11 @@ const Skills = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }} // faster hover & entrance
                 whileHover={{
-                  scale: 1.05,
-                  y: -5,
-                  boxShadow: '0 8px 20px rgba(229, 9, 20, 0.5)',
-                  transition: { duration: 0.15 }, // snappier hover
+                  scale: 1.08,
+                  y: -8,
+                  rotateY: 5,
+                  boxShadow: '0 12px 30px rgba(229, 9, 20, 0.6)',
+                  transition: { duration: 0.2 },
                 }}
                 className="bg-gradient-to-r from-gray-900/50 to-gray-800/50 p-5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-red-500/50 transition-all duration-150"
               >

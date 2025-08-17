@@ -185,15 +185,25 @@ const Projects = () => {
           {filteredProjects.map((project, index) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 100, rotateX: -15 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
-              className="bg-gradient-to-br from-netflix-gray/80 to-black/80 rounded-2xl overflow-hidden backdrop-blur-sm border border-netflix-gray hover:border-netflix-red/50 hover:shadow-lg hover:shadow-red-500/40 transition-all duration-200 group h-full flex flex-col"
+              transition={{ duration: 0.8, delay: index * 0.1 }}
+              whileHover={{ 
+                y: -15, 
+                rotateY: 5, 
+                rotateX: -5,
+                scale: 1.02,
+                boxShadow: '0 20px 40px rgba(229, 9, 20, 0.3)',
+              }}
+              className="bg-gradient-to-br from-netflix-gray/80 to-black/80 rounded-2xl overflow-hidden backdrop-blur-sm border border-netflix-gray hover:border-netflix-red/50 transition-all duration-300 group h-full flex flex-col transform-gpu perspective-1000"
             >
               {/* Project Image or Icon */}
-              <div className="relative overflow-hidden group">
+              <motion.div 
+                className="relative overflow-hidden group"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
                 {project.image ? (
                   <Image 
                     src={project.image} 
@@ -209,7 +219,12 @@ const Projects = () => {
                 )}
 
                 {/* Hover Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center gap-4 bg-black/50 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <motion.div 
+                  className="absolute inset-0 flex items-center justify-center gap-4 bg-black/50 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  whileHover={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
                   {/* GitHub Icon */}
                   <a
                     href={project.github || '#'}
@@ -220,6 +235,7 @@ const Projects = () => {
                         ? 'bg-white/10 hover:bg-netflix-red text-white'
                         : 'bg-gray-600 cursor-not-allowed text-gray-300'
                     }`}
+                    data-cursor="special"
                   >
                     <Github size={24} />
                   </a>
@@ -233,18 +249,25 @@ const Projects = () => {
                         ? 'bg-white/10 hover:bg-netflix-red text-white'
                         : 'bg-gray-600 cursor-not-allowed text-gray-300'
                     }`}
+                    data-cursor="special"
                   >
                     <ExternalLink size={24} />
                   </a>
-                </div>
+                </motion.div>
 
                 {/* Featured Badge */}
                 {project.featured && (
-                  <div className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-netflix-red to-netflix-red-dark text-white text-xs font-semibold rounded-full shadow-lg">
+                  <motion.div 
+                    className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-netflix-red to-netflix-red-dark text-white text-xs font-semibold rounded-full shadow-lg"
+                    initial={{ scale: 0, rotate: -180 }}
+                    whileInView={{ scale: 1, rotate: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                  >
                     Featured
-                  </div>
+                  </motion.div>
                 )}
-              </div>
+              </motion.div>
 
               {/* Project Content */}
               <div className="p-6 flex-1 flex flex-col">
@@ -255,13 +278,21 @@ const Projects = () => {
 
                 {/* Tech Tags */}
                 <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                  {project.technologies.map((tech) => (
-                    <span
+                  {project.technologies.map((tech, techIndex) => (
+                    <motion.span
                       key={tech}
-                      className="px-3 py-1 text-xs rounded-full bg-netflix-red/15 text-netflix-red border border-netflix-red/30"
+                      initial={{ scale: 0, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.3, delay: techIndex * 0.05 }}
+                      whileHover={{ 
+                        scale: 1.1, 
+                        y: -2,
+                        boxShadow: '0 4px 12px rgba(229, 9, 20, 0.4)',
+                      }}
+                      className="px-3 py-1 text-xs rounded-full bg-netflix-red/15 text-netflix-red border border-netflix-red/30 cursor-pointer transition-all duration-200"
                     >
                       {tech}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
 
@@ -276,6 +307,7 @@ const Projects = () => {
                     }`}
                     target={project.github ? '_blank' : '_self'}
                     rel="noopener noreferrer"
+                    data-cursor="special"
                   >
                     Code
                   </a>
@@ -288,6 +320,7 @@ const Projects = () => {
                     }`}
                     target={project.live ? '_blank' : '_self'}
                     rel="noopener noreferrer"
+                    data-cursor="special"
                   >
                     Live Demo
                   </a>
