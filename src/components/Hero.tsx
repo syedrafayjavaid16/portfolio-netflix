@@ -4,7 +4,6 @@ import { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import Parallax3D from './Parallax3D';
-import ParallaxBackground from './ParallaxBackground';
 import { useParallax } from '@/contexts/ParallaxContext';
 
 const Hero = () => {

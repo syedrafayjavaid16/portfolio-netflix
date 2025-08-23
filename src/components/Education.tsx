@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { GraduationCap, MapPin, Calendar, ExternalLink, Award, BookOpen, Star, Target, Sparkles, ArrowRight, Trophy } from 'lucide-react';
+import { GraduationCap, MapPin, Calendar, Award, BookOpen, Star, Target, Sparkles, Trophy } from 'lucide-react';
 import Parallax3D from './Parallax3D';
 import ParallaxBackground from './ParallaxBackground';
 import { useParallax } from '@/contexts/ParallaxContext';

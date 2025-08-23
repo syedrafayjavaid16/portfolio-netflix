@@ -62,7 +62,7 @@ const AnimatedCounter = ({ target, suffix = '+', duration = 2000, shouldAnimate 
 };
 
 // Individual Stat Card Component
-const StatCard = ({ stat, index, parallaxEnabled }: {
+const StatCard = ({ stat, parallaxEnabled }: {
   stat: {
     icon: React.ComponentType<{ size: number; className: string }>;
     label: string;
@@ -70,7 +70,6 @@ const StatCard = ({ stat, index, parallaxEnabled }: {
     numericValue: number;
     color: string;
   };
-  index: number;
   parallaxEnabled: boolean;
 }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -370,12 +369,11 @@ const About = () => {
             viewport={{ once: true, amount: 0.3 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12"
           >
-            {stats.map((stat, index) => (
+            {stats.map((stat) => (
               <StatCard 
                 key={stat.label} 
-                stat={stat} 
-                index={index} 
-                parallaxEnabled={parallaxEnabled} 
+                stat={stat}
+                parallaxEnabled={parallaxEnabled}
               />
             ))}
           </motion.div>
