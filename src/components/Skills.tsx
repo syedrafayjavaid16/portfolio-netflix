@@ -3,9 +3,13 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
+import Parallax3D from './Parallax3D';
+import ParallaxBackground from './ParallaxBackground';
+import { useParallax } from '@/contexts/ParallaxContext';
 
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState('frontend');
+  const { parallaxEnabled } = useParallax();
 
   const skillCategories = {
     frontend: {
@@ -99,6 +103,8 @@ const Skills = () => {
 
   return (
     <section id="skills" className="py-20 bg-gradient-to-b from-black via-netflix-black to-black relative overflow-hidden">
+      <ParallaxBackground />
+      
       {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/5 w-72 h-72 bg-netflix-red/10 rounded-full blur-3xl" />
@@ -114,13 +120,15 @@ const Skills = () => {
           className="max-w-6xl mx-auto"
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gradient mb-4">Skills & Expertise</h2>
-            <div className="w-24 h-1 bg-netflix-red mx-auto rounded-full" />
-            <p className="text-base text-gray-300 mt-4 max-w-xl mx-auto">
-              A comprehensive overview of my technical skills and expertise across different domains
-            </p>
-          </motion.div>
+          <Parallax3D enabled={parallaxEnabled} className="text-center mb-12">
+            <motion.div variants={itemVariants}>
+              <h2 className="text-4xl font-bold text-gradient mb-4">Skills & Expertise</h2>
+              <div className="w-24 h-1 bg-netflix-red mx-auto rounded-full" />
+              <p className="text-base text-gray-300 mt-4 max-w-xl mx-auto">
+                A comprehensive overview of my technical skills and expertise across different domains
+              </p>
+            </motion.div>
+          </Parallax3D>
 
           {/* Category Tabs */}
           <motion.div variants={itemVariants} className="flex justify-center mb-8">
@@ -153,20 +161,20 @@ const Skills = () => {
             className="grid md:grid-cols-3 gap-8"
           >
             {skillCategories[activeCategory as keyof typeof skillCategories].skills.map((skill, index) => (
-              <motion.div
-                key={skill.name}
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }} // faster hover & entrance
-                whileHover={{
-                  scale: 1.08,
-                  y: -8,
-                  rotateY: 5,
-                  boxShadow: '0 12px 30px rgba(229, 9, 20, 0.6)',
-                  transition: { duration: 0.2 },
-                }}
-                className="bg-gradient-to-r from-gray-900/50 to-gray-800/50 p-5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-red-500/50 transition-all duration-150"
-              >
+              <Parallax3D key={skill.name} enabled={parallaxEnabled}>
+                <motion.div
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }} // faster hover & entrance
+                  whileHover={{
+                    scale: 1.08,
+                    y: -8,
+                    rotateY: 5,
+                    boxShadow: '0 12px 30px rgba(229, 9, 20, 0.6)',
+                    transition: { duration: 0.2 },
+                  }}
+                  className="bg-gradient-to-r from-gray-900/50 to-gray-800/50 p-5 rounded-xl backdrop-blur-sm border border-white/10 hover:border-red-500/50 transition-all duration-150"
+                >
                 <div className="flex justify-between items-center mb-3">
                   <div className="flex items-center gap-3">
                     {/* Fixed icon size wrapper */}
@@ -187,7 +195,8 @@ const Skills = () => {
                     className="h-full rounded-full bg-gradient-to-r from-red-500 to-red-700"
                   />
                 </div>
-              </motion.div>
+                </motion.div>
+              </Parallax3D>
             ))}
           </motion.div>
         </motion.div>
