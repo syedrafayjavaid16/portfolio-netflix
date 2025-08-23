@@ -4,9 +4,13 @@ import { motion } from 'framer-motion';
 import { ExternalLink, Github, Eye, Layout, Database, Smartphone } from 'lucide-react';
 import { useState } from 'react';
 import Image from 'next/image';
+import Parallax3D from './Parallax3D';
+import ParallaxBackground from './ParallaxBackground';
+import { useParallax } from '@/contexts/ParallaxContext';
 
 const Projects = () => {
   const [filter, setFilter] = useState('all');
+  const { parallaxEnabled } = useParallax();
 
   const projects = [
     {
@@ -134,26 +138,33 @@ const Projects = () => {
 
   return (
     <section id="projects" className="py-20 bg-gradient-to-b from-black via-[#0b0b0b] to-[#141414] relative overflow-hidden">
+      {/* 3D Parallax Background */}
+      <ParallaxBackground />
+      
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <motion.h2
+        {/* Enhanced Section Header */}
+        <Parallax3D enabled={parallaxEnabled} className="text-center mb-16">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-2xl md:text-3xl lg:text-4xl font-bold text-gradient mb-4"
+            className="relative inline-block"
           >
-            My Projects
-          </motion.h2>
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-24 h-1 bg-netflix-red mx-auto rounded-full"
-          />
-        </div>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gradient mb-4">
+              My Projects
+            </h2>
+            {/* Animated underline */}
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: "100%" }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="h-1 bg-gradient-to-r from-transparent via-netflix-red to-transparent mx-auto rounded-full"
+            />
+          </motion.div>
+          
+          
+        </Parallax3D>
 
         {/* Filter Buttons */}
         <div className="flex justify-center mb-12">
@@ -183,7 +194,8 @@ const Projects = () => {
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {filteredProjects.map((project, index) => (
-            <motion.div
+            <Parallax3D key={project.id} enabled={parallaxEnabled} className="w-full">
+              <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 100, rotateX: -15 }}
               whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
@@ -326,7 +338,8 @@ const Projects = () => {
                   </a>
                 </div>
               </div>
-            </motion.div>
+              </motion.div>
+            </Parallax3D>
           ))}
         </div>
       </div>

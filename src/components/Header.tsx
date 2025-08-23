@@ -12,6 +12,8 @@ import {
   Home,
   User,
   Code,
+  Clock,
+  GraduationCap,
   Briefcase,
   MessageSquare,
 } from "lucide-react";
@@ -26,13 +28,13 @@ const Header = () => {
       setScrolled(window.scrollY > 50);
       
       // Update active link based on scroll position
-      const sections = ['home', 'about', 'skills', 'projects', 'contact'];
+      const sections = ['home', 'about', 'skills', 'experience', 'education', 'projects', 'contact'];
       const scrollPosition = window.scrollY + 100; // Offset for header height
       
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i]);
         if (section && section.offsetTop <= scrollPosition) {
-          const sectionNames = ['Home', 'About', 'Skills', 'Projects', 'Contact'];
+          const sectionNames = ['Home', 'About', 'Skills', 'Experience', 'Education', 'Projects', 'Contact'];
           setActiveLink(sectionNames[i]);
           break;
         }
@@ -47,6 +49,8 @@ const Header = () => {
     { name: "Home", href: "#home", icon: Home },
     { name: "About", href: "#about", icon: User },
     { name: "Skills", href: "#skills", icon: Code },
+    { name: "Experience", href: "#experience", icon: Clock },
+    { name: "Education", href: "#education", icon: GraduationCap },
     { name: "Projects", href: "#projects", icon: Briefcase },
     { name: "Contact", href: "#contact", icon: MessageSquare },
   ];

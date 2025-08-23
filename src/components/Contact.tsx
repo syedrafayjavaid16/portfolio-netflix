@@ -125,15 +125,32 @@ const Contact = () => {
           viewport={{ once: true, amount: 0.3 }}
           className="max-w-6xl mx-auto"
         >
-          {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gradient mb-4">
-              Get In Touch
-            </h2>
-            <div className="w-24 h-1 bg-netflix-red mx-auto rounded-full" />
-            <p className="text-base text-gray-300 mt-4 max-w-xl mx-auto">
+          {/* Enhanced Section Header */}
+          <motion.div variants={itemVariants} className="text-center mb-16">
+            <motion.div
+              variants={itemVariants}
+              className="relative inline-block"
+            >
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gradient mb-4">
+                Get In Touch
+              </h2>
+              {/* Animated underline */}
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "100%" }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className="h-1 bg-gradient-to-r from-transparent via-netflix-red to-transparent mx-auto rounded-full"
+              />
+            </motion.div>
+            
+            
+            
+            <motion.p
+              variants={itemVariants}
+              className="text-base text-gray-300 mt-4 max-w-xl mx-auto"
+            >
               Ready to start your next project? Let&apos;s work together to create something amazing.
-            </p>
+            </motion.p>
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-12">
